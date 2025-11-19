@@ -8,7 +8,22 @@
 <body>
     <div class="container">
         <h1>リスト一覧</h1>
-        <p th:text="${test}"></p>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>概要</th>
+                <th>ステータス</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="task : ${tasks}" th:object="${task}">
+                <td><a th:text="'#' + *{id}"></a></td>
+                <td><a th:text="*{summary}"></a></td>
+                <td th:text="*{status}"></td>
+            </tr>
+            </tbody>
+        </table>
         <a th:href="@{/}">トップページへ</a>
     </div>
 </body>
