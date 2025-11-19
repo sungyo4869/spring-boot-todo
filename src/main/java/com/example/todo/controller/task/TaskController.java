@@ -1,5 +1,6 @@
 package com.example.todo.controller.task;
 
+import com.example.todo.service.task.TaskEntity;
 import com.example.todo.service.task.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,7 +16,10 @@ public class TaskController {
 
     @GetMapping("/tasks")
     public String list(Model model) {
-        var tasks = taskService.find();
+        var tasks = taskService.find()
+                .stream()
+                .map(TaskDTO::toDTO)
+                .toList();
         model.addAttribute("tasks", tasks);
         return "tasks/list";
     }
