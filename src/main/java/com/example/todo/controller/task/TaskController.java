@@ -1,5 +1,6 @@
 package com.example.todo.controller.task;
 
+import com.example.todo.service.task.TaskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,13 +8,12 @@ import java.util.List;
 
 @Controller
 public class TaskController {
+
+    private final TaskService taskService = new TaskService();
+
     @GetMapping("/tasks")
     public String list(Model model) {
-        List<TaskDTO> tasks = List.of(
-                new TaskDTO(1, "買い物", "スーパーで野菜を買う", "TODO"),
-                new TaskDTO(2, "勉強", "Spring Boot を学ぶ", "IN_PROGRESS"),
-                new TaskDTO(3, "運動", "ジョギング 5km", "DONE")
-        );
+        var tasks = taskService.find();
         model.addAttribute("tasks", tasks);
         return "tasks/list";
     }
